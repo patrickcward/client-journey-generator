@@ -9,5 +9,6 @@ public class Main {
         Client aClient = new Client("indy company");
         HibernateClientRepository clientRepository = new HibernateClientRepository();
         clientRepository.saveClient(aClient);
+        javax.swing.SwingUtilities.invokeLater(MainWindow :: new);
     }
 }
