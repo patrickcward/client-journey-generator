@@ -1,6 +1,7 @@
 *.class
 *.jar
 *.iml
+*.db
 .idea/
 out/
 target/
