@@ -28,6 +28,40 @@ public class HibernateClientRepository implements ClientRepository {
     }
 
     @Override
+    public Optional<Client> getClientByUuidWithContacts(String uuid) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Client client = session.createQuery(
+                            "select distinct c from Client c " +
+                                    "left join fetch c.clientContacts " +
+                                    "where c.uuid = :uuid",
+                            Client.class
+                    )
+                    .setParameter("uuid", uuid)
+                    .uniqueResult();
+
+            return Optional.ofNullable(client);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find client by uuid with contacts", e);
+        }
+    }
+
+    @Override
+    public Optional<Client> getClientByUuid(String uuid) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Client client = session.createQuery(
+                            "FROM Client WHERE uuid = :uuid",
+                            Client.class
+                    )
+                    .setParameter("uuid", uuid)
+                    .uniqueResult();
+
+            return Optional.ofNullable(client);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find client by uuid", e);
+        }
+    }
+
+    @Override
     public Optional<Client> getClientByBusinessName(String businessName) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Client client = session.createQuery(

@@ -82,4 +82,6 @@ public class Contact {
     public String toString() {
         return name + (email != null ? " (" + email + ")" : "");
     }
+
+
 }

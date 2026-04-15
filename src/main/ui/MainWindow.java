@@ -13,22 +13,9 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-
-        add(buildToolbar(), BorderLayout.NORTH);
         add(buildTabbedPane(), BorderLayout.CENTER);
 
         setVisible(true);
-    }
-
-    private JToolBar buildToolbar() {
-        JToolBar toolBar = new JToolBar();
-        toolBar.setFloatable(false);
-
-        toolBar.add(new JButton("Clients"));
-        toolBar.add(new JButton("Journeys"));
-        toolBar.add(new JButton("Settings"));
-
-        return toolBar;
     }
 
     private JTabbedPane buildTabbedPane() {

@@ -2,6 +2,7 @@ package main.ui.panels;
 
 import main.customers.Client;
 import main.customers.services.HibernateClientRepository;
+import main.ui.ClientDetailPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -169,60 +170,8 @@ public class ClientsPanel extends JPanel {
     }
 
     private void showClientDetail(Client client) {
-        JPanel clientDetail = new JPanel(new BorderLayout());
-
-        JLabel title = new JLabel(client.getBusinessName(), SwingConstants.CENTER);
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 18f));
-
-        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton deleteButton = new JButton("Delete");
-        JButton refreshButton = new JButton("Refresh");
-
-        buttons.add(refreshButton);
-        buttons.add(deleteButton);
-
-        JTextArea info = new JTextArea();
-        info.setEditable(false);
-        info.setText(
-                "Business Name: " + client.getBusinessName() + "\n" +
-                        "UUID: " + client.getUuid() + "\n" +
-                        "Contacts: " + client.getClientContacts().size()
-        );
-
-        refreshButton.addActionListener(e -> {
-            clientRepository.getClientByBusinessName(client.getBusinessName())
-                    .ifPresent(this::showClientDetail);
-        });
-
-        deleteButton.addActionListener(e -> {
-            int result = JOptionPane.showConfirmDialog(
-                    this,
-                    "Delete client '" + client.getBusinessName() + "'?",
-                    "Confirm Delete",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (result == JOptionPane.YES_OPTION) {
-                try {
-                    clientRepository.deleteClient(client);
-                    loadClientsFromDatabase();
-                    detailLayout.show(detailPanel, "EMPTY");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Failed to delete client: " + ex.getMessage(),
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                }
-            }
-        });
-
-        clientDetail.add(title, BorderLayout.NORTH);
-        clientDetail.add(new JScrollPane(info), BorderLayout.CENTER);
-        clientDetail.add(buttons, BorderLayout.SOUTH);
-
-        detailPanel.add(clientDetail, "CLIENT_DETAIL");
+        ClientDetailPanel clientDetailPanel = new ClientDetailPanel(client);
+        detailPanel.add(clientDetailPanel, "CLIENT_DETAIL");
         detailLayout.show(detailPanel, "CLIENT_DETAIL");
     }
 }

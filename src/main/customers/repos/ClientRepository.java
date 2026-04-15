@@ -11,6 +11,10 @@ public interface ClientRepository {
 
     Optional<Client> getClientByBusinessName(String businessName);
 
+    Optional<Client> getClientByUuid(String uuid);
+
+    Optional<Client> getClientByUuidWithContacts(String uuid);
+
     List<Client> findAllClients();
 
     void updateClient(Client client);
