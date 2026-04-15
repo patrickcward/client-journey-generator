@@ -24,13 +24,9 @@ public class MainWindow extends JFrame {
         JToolBar toolBar = new JToolBar();
         toolBar.setFloatable(false);
 
-        JButton clientsButton = new JButton("Clients");
-        JButton journeysButton = new JButton("Journeys");
-        JButton settingsButton = new JButton("Settings");
-
-        toolBar.add(clientsButton);
-        toolBar.add(journeysButton);
-        toolBar.add(settingsButton);
+        toolBar.add(new JButton("Clients"));
+        toolBar.add(new JButton("Journeys"));
+        toolBar.add(new JButton("Settings"));
 
         return toolBar;
     }
